@@ -6,7 +6,8 @@ const
     webpack = require('webpack'),
     autoprefixer = require('autoprefixer'),
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
-    HtmlWebpackPlugin = require('html-webpack-plugin');
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
+    WebpackDevServer = require('webpack-dev-server');
 
 const webpackConfig = {
     entry: [
@@ -26,7 +27,8 @@ const webpackConfig = {
     },
     module: {
         loaders: [
-            {test: /\.ts$/, loader: 'babel?presets[]=es2015,presets[]=stage-0!ts', include: /app/},
+            {test: /\.ts$/, loader: 'babel?presets[]=es2015,presets[]=stage-0!ts', include: /src/},
+            {test: /\.json$/, loader: 'json', include: /src/},
             {test: /\.jade$/, loader: 'jade-loader'},
             {test: /\.css$/, loader: ExtractTextPlugin.extract('css!postcss')},
             {test: /\.scss$/, loader:  ExtractTextPlugin.extract('style', 'css!postcss!sass')},
@@ -46,5 +48,11 @@ const webpackConfig = {
         autoprefixer()
     ]
 };
+if (ENV === 'dev') {
+    webpackConfig.entry.unshift("webpack-dev-server/client?http://localhost:8080/");
+    const compiler = webpack(webpackConfig);
+    const server = new WebpackDevServer(compiler);
+    server.listen(8080);
+}
 
 module.exports = webpackConfig;
