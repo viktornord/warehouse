@@ -12,13 +12,25 @@
 
         </md-card-title>
         <md-card-actions class="warehouse-product-actions" layout="row" layout-align="end center">
-            <md-slide-toggle (change)="toggle()" *ngIf="product.children">{{expanded ? 'Hide' : 'Show'}} related products</md-slide-toggle>
-            <button md-mini-fab (click)="addProduct()">
-                <md-icon class="md-24">add</md-icon>
-            </button>
+            <div class="warehouse-product-action">
+                <md-slide-toggle (change)="toggle()" *ngIf="product.children">{{expanded ? 'Hide' : 'Show'}} related products</md-slide-toggle>
+            </div>
+            <div class="warehouse-product-action">
+                <button md-mini-fab (click)="dialog.show()">
+                    <md-icon class="md-24">add</md-icon>
+                </button>
+            </div>
         </md-card-actions>
     </md-card>
     <div class="warehouse-related-products" *ngIf="product.children" [hidden]="!expanded">
         <warehouse-product *ngFor="let item of product.children" [product]="item"></warehouse-product>
     </div>
+    <md-dialog #dialog (onClose)="addProduct($event)">
+        <input type="text" #titleEl />
+        <input type="number" #weightEl />
+        <md-dialog-actions>
+            <button md-raised-button (click)="dialog.close({title: titleEl.value, weight: weightEl.value})">Add a product</button>
+            <button md-raised-button (click)="dialog.close(false)"> Cancel</button>
+        </md-dialog-actions>
+    </md-dialog>
 </div>

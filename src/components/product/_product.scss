@@ -11,6 +11,8 @@
     display: flex;
     align-items: center;
     height: 65px;
-    justify-content: space-between;
+  }
+  &-action {
+    margin-right: 10px;
   }
 }
