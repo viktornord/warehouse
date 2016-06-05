@@ -11,8 +11,11 @@
             </p>
 
         </md-card-title>
-        <md-card-actions layout="row" layout-align="end center">
+        <md-card-actions class="warehouse-product-actions" layout="row" layout-align="end center">
             <md-slide-toggle (change)="toggle()" *ngIf="product.children">{{expanded ? 'Hide' : 'Show'}} related products</md-slide-toggle>
+            <button md-mini-fab (click)="addProduct()">
+                <md-icon class="md-24">add</md-icon>
+            </button>
         </md-card-actions>
     </md-card>
     <div class="warehouse-related-products" *ngIf="product.children" [hidden]="!expanded">

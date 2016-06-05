@@ -2,6 +2,7 @@ import {Component, Input, OnInit, Output} from '@angular/core';
 import {MdCard} from '@angular2-material/card';
 import {MdSlideToggle} from '@angular2-material/slide-toggle';
 import {MdButton} from '@angular2-material/button';
+import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
 import {EditableComponent} from 'src/components/editable/editable.component';
 
 const template = require('./product.tpl.html') as string;
@@ -9,7 +10,8 @@ const template = require('./product.tpl.html') as string;
 @Component({
     selector: 'warehouse-product',
     template,
-    directives: [ProductComponent, MdCard, MdButton, MdSlideToggle, EditableComponent]
+    directives: [ProductComponent, MdCard, MdButton, MdIcon, MdSlideToggle, EditableComponent],
+    viewProviders: [MdIconRegistry]
 })
 
 export class ProductComponent {
@@ -20,8 +22,12 @@ export class ProductComponent {
         this.expanded = !this.expanded;
     }
 
-    addChildProduct() {
-
+    addProduct() {
+        this.product.children = this.product.children || [];
+        this.product.children.push({
+            title: 'New Product',
+            weight: 0
+        });
     }
 
     getProductWeight():number {
