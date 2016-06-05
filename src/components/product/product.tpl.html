@@ -1,0 +1,16 @@
+<div class="warehouse-product-wrapper">
+    <md-card class="warehouse-product">
+        <md-card-title class="warehouse-product-title">
+            {{product.title}} <strong *ngIf="product.children">({{product.children.length}})</strong>
+            <p>
+                <strong>weight: </strong> {{getProductWeight()}}
+            </p>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-slide-toggle (change)="toggle()" *ngIf="product.children">{{expanded ? 'Hide' : 'Show'}} related products</md-slide-toggle>
+        </md-card-actions>
+    </md-card>
+    <div class="warehouse-related-products" *ngIf="product.children" [hidden]="!expanded">
+        <warehouse-product *ngFor="let item of product.children" [product]="item"></warehouse-product>
+    </div>
+</div>

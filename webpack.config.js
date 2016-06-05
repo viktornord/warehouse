@@ -31,7 +31,8 @@ const webpackConfig = {
             {test: /\.json$/, loader: 'json', include: /src/},
             {test: /\.jade$/, loader: 'jade-loader'},
             {test: /\.css$/, loader: ExtractTextPlugin.extract('css!postcss')},
-            {test: /\.scss$/, loader:  ExtractTextPlugin.extract('style', 'css!postcss!sass')},
+            {test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')},
+            {test: /\.html$/, loader: 'html'},
             {test: /\.(png|jpg|svg|ttf|eot|woff||woff2)$/, loader:  'file?name=[path]'}
         ]
     },
