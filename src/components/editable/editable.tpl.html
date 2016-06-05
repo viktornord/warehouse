@@ -1,0 +1,2 @@
+<span [hidden]="isEditMode()" (click)="setEditMode()">{{model}}</span>
+<input type="{{inputType}}" [hidden]="!isEditMode()" value="{{model}}" (change)="onUpdateModel(input.value)" (blur)="setEditMode(false)" #input />
