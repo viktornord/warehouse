@@ -50,10 +50,10 @@ const webpackConfig = {
     ]
 };
 if (ENV === 'dev') {
-    webpackConfig.entry.unshift("webpack-dev-server/client?http://localhost:8080/");
+    webpackConfig.entry.unshift("webpack-dev-server/client?http://localhost:8082/");
     const compiler = webpack(webpackConfig);
     const server = new WebpackDevServer(compiler);
-    server.listen(8080);
+    server.listen(8082);
 }
 
 module.exports = webpackConfig;

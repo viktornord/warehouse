@@ -1,12 +1,16 @@
 <div class="warehouse-product-wrapper">
     <md-card class="warehouse-product">
         <md-card-title class="warehouse-product-title">
-            <warehouse-editable [model]="product.title" (update)="updateTitle($event)"></warehouse-editable>
+            <warehouse-editable [model]="product.title" (update)="product.setTitle($event)"></warehouse-editable>
             <strong *ngIf="product.children">({{product.children.length}})</strong>
             <p>
                 <strong>weight: </strong>
-                <span [hidden]="!hasRelatedProducts()">{{getProductWeight()}}</span>
-                <warehouse-editable *ngIf="!product.children" [model]="product.weight" (update)="updateWeight($event)" input-type="number">
+                <span [hidden]="!product.hasRelatedProducts()">{{product.weight}}</span>
+                <warehouse-editable
+                        *ngIf="!product.children"
+                        [model]="product.weight"
+                        (update)="product.setWeight($event)"
+                        input-type="number">
                 </warehouse-editable>
             </p>
 

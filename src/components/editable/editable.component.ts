@@ -21,8 +21,7 @@ export class EditableComponent {
     }
 
     setEditMode(editMode = true) {
-        this._editMode = editMode;
-        editMode && this.focusInput();
+        (this._editMode = editMode) && this.focusInput();
     }
 
     isEditMode() {

@@ -5,6 +5,8 @@ import {MdSlideToggle} from '@angular2-material/slide-toggle';
 import {MdButton} from '@angular2-material/button';
 import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
 import {EditableComponent} from 'src/components/editable/editable.component';
+import {Product} from './product-model';
+import IProduct = warehouse.IProduct;
 
 const template = require('./product.tpl.html') as string;
 
@@ -15,50 +17,23 @@ const template = require('./product.tpl.html') as string;
     viewProviders: [MdIconRegistry]
 })
 
-export class ProductComponent {
-    @Input() product:any;
+export class ProductComponent implements OnInit {
+    @Input() product:IProduct;
     expanded:boolean = false;
+    
+    ngOnInit():void {
+        Object.setPrototypeOf(this.product, Product.prototype);
+    }
 
     toggle() {
         this.expanded = !this.expanded;
     }
 
-    addProduct(newProduct) {
-        if (newProduct) {
-            this.product.children = this.product.children || [];
-            this.product.children.unshift(Object.assign({
-                title: 'New Product',
-                weight: 0
-            }, newProduct));
+    addProduct(productData) {
+        if (productData) {
+            this.product.addRelatedProduct(productData as IProduct);
             this.expanded = true;
         }
-    }
-
-    getProductWeight():number {
-        const weight:number = this.calculateProductWeight(this.product);
-
-        return weight ? (this.product.weight = weight) : 0;
-    }
-
-    calculateProductWeight(product) {
-
-        return !this.product.children ?
-            this.product.weight :
-            _.map(product.children, 'weight').reduce((totalWeight:number, weight:number) => totalWeight + weight, 0) as number;
-    }
-
-    updateWeight(newWeight:string) {
-        const weight:number = Number(newWeight);
-        !Number.isNaN(weight) && (this.product.weight = weight);
-    }
-
-    updateTitle(newTitle:string) {
-        this.product.title = newTitle;
-    }
-
-    hasRelatedProducts() {
-
-        return !_.isEmpty(this.product.children);
     }
 
 
