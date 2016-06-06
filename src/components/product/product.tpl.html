@@ -20,7 +20,7 @@
                     <md-slide-toggle class="md-primary" (change)="toggle()" *ngIf="product.children"></md-slide-toggle>
                 </div>
                 <div class="warehouse-product-action">
-                    <button md-fab class="md-icon-button md-primary" aria-label="Add a product">
+                    <button md-fab class="md-icon-button md-primary" (click)="dialog.show()" aria-label="Add a product">
                         <i md-icon>add</i>
                     </button>
                 </div>
