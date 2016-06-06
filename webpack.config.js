@@ -2,11 +2,13 @@
 
 const
     ENV = process.env.NODE_ENV,
+    PORT = 8082,
     path = require('path'),
     webpack = require('webpack'),
     autoprefixer = require('autoprefixer'),
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
-    HtmlWebpackPlugin = require('html-webpack-plugin');
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
+    WebpackDevServer = require('webpack-dev-server');
 
 const webpackConfig = {
     entry: [
@@ -26,10 +28,12 @@ const webpackConfig = {
     },
     module: {
         loaders: [
-            {test: /\.ts$/, loader: 'babel?presets[]=es2015,presets[]=stage-0!ts', include: /app/},
+            {test: /\.ts$/, loader: 'babel?presets[]=es2015,presets[]=stage-0!ts', include: /src/},
+            {test: /\.json$/, loader: 'json', include: /src/},
             {test: /\.jade$/, loader: 'jade-loader'},
             {test: /\.css$/, loader: ExtractTextPlugin.extract('css!postcss')},
-            {test: /\.scss$/, loader:  ExtractTextPlugin.extract('style', 'css!postcss!sass')},
+            {test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')},
+            {test: /\.html$/, loader: 'html'},
             {test: /\.(png|jpg|svg|ttf|eot|woff||woff2)$/, loader:  'file?name=[path]'}
         ]
     },
@@ -46,5 +50,11 @@ const webpackConfig = {
         autoprefixer()
     ]
 };
+if (ENV === 'dev') {
+    webpackConfig.entry.unshift(`webpack-dev-server/client?http://localhost:${PORT}/`);
+    webpackConfig.devServer = {
+        port: PORT
+    };
+}
 
 module.exports = webpackConfig;

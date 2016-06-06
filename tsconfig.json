@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "ES5",
-    "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -9,7 +8,7 @@
     "noImplicitAny": false
   },
   "filesGlob": [
-    "./app/**/*.ts"
+    "./src/**/*.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false,
