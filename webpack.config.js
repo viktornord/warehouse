@@ -2,6 +2,7 @@
 
 const
     ENV = process.env.NODE_ENV,
+    PORT = 8082,
     path = require('path'),
     webpack = require('webpack'),
     autoprefixer = require('autoprefixer'),
@@ -50,10 +51,10 @@ const webpackConfig = {
     ]
 };
 if (ENV === 'dev') {
-    webpackConfig.entry.unshift("webpack-dev-server/client?http://localhost:8082/");
-    const compiler = webpack(webpackConfig);
-    const server = new WebpackDevServer(compiler);
-    server.listen(8082);
+    webpackConfig.entry.unshift(`webpack-dev-server/client?http://localhost:${PORT}/`);
+    webpackConfig.devServer = {
+        port: PORT
+    };
 }
 
 module.exports = webpackConfig;

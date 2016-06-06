@@ -31,7 +31,7 @@ export class ProductComponent implements OnInit {
 
     addProduct(productData) {
         if (productData) {
-            this.product.addRelatedProduct(productData as IProduct);
+            this.product.addRelatedProduct(new Product(productData));
             this.expanded = true;
         }
     }

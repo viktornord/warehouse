@@ -2,29 +2,25 @@ import IProduct = warehouse.IProduct;
 
 export class Product implements warehouse.IProduct {
     title:string = 'New Product';
-    private _weight:number = 0;
+    weight:number = 0;
     children:IProduct[];
     
-    constructor(data:{}) {
+    constructor(data) {
+        this.isValidWeight(data.weight) && (data.weight = Number(data.weight));
         Object.assign(this, data);
     }
 
-    private calculateWeight() {
-
-        return !this.children ?
+    calculateWeight():number {
+        const weight = !this.children ?
             this.weight :
             _.map(this.children, 'weight').reduce((totalWeight:number, weight:number) => totalWeight + weight, 0) as number;
-    }
 
-    get weight():number {
-        const weight:number = this.calculateWeight();
-
-        return weight ? (this._weight = weight) : 0;
+        return weight ? (this.weight = weight) : 0;
     }
     
     setWeight(newWeight:string | number):void {
         const weight:number = Number(newWeight);
-        !Number.isNaN(weight) && (this._weight = weight);
+        !Number.isNaN(weight) && (this.weight = weight);
     }
     
     setTitle(title:string) {
@@ -41,5 +37,10 @@ export class Product implements warehouse.IProduct {
         this.children.unshift(product);
 
         return this;
+    }
+
+    private isValidWeight(weight) {
+
+        return !Number.isNaN(Number(weight));
     }
 }
