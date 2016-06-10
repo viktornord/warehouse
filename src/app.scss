@@ -1,5 +1,6 @@
 @import 'components/product/product';
 @import '~ng2-material/all.scss';
+@import '~@angular2-material/core/style/core';
 
 html, body {
   height: 100%;
@@ -17,4 +18,15 @@ warehouse-app {
   height: calc(100% - 64px);
   overflow: auto;
   display: block;
+}
+.warehouse-left-spacer {
+  margin-left: 5px;
+}
+.warehouse-right-spacer {
+  margin-right: 5px;
+}
+.warehouse-sort-btn {
+  cursor: pointer;
+  height: 5px;
+  width: 5px;
 }

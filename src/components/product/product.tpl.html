@@ -1,20 +1,26 @@
 <div class="warehouse-product-wrapper">
     <md-card class="warehouse-product">
         <md-card-title class="warehouse-product-title">
-            <warehouse-editable [model]="product.title" (update)="product.setTitle($event)"></warehouse-editable>
-            <strong *ngIf="product.children">({{product.children.length}})</strong>
+            <div layout="row">
+                <warehouse-editable [model]="product.title" (update)="product.setTitle($event)"></warehouse-editable>
+                <strong class="warehouse-left-spacer warehouse-right-spacer" *ngIf="product.children">({{product.children.length}})</strong>
+                <span class="primary warehouse-sort-btn" (click)="sortBy('title')" [hidden]="!isSortedBy('title')">
+                    <i md-icon>keyboard_arrow_{{sortArrowDirection}}</i>
+                </span>
+            </div>
         </md-card-title>
         <md-card-content class="warehouse-product-content">
-            <p>
-                <span>weight: </span>
-                <span [hidden]="!product.hasRelatedProducts()">{{product.calculateWeight()}}</span>
+            <div layout="row">
+                <span class="warehouse-left-spacer warehouse-right-spacer">weight:</span>
+                <strong [hidden]="!product.hasRelatedProducts()">{{product.calculateWeight()}}</strong>
                 <warehouse-editable
                         *ngIf="!product.children"
                         [model]="product.weight"
                         (update)="product.setWeight($event)"
                         input-type="number">
                 </warehouse-editable>
-            </p>
+                <span class="warehouse-sort-btn" (click)="sortBy('weight')" [hidden]="!isSortedBy('weight')"><i md-icon>keyboard_arrow_{{sortArrowDirection}}</i></span>
+            </div>
             <div class="warehouse-product-actions" layout="row" layout-align="end center">
                 <div class="warehouse-product-action">
                     <md-slide-toggle class="md-primary" (change)="toggle()" *ngIf="product.children"></md-slide-toggle>
@@ -24,11 +30,18 @@
                         <i md-icon>add</i>
                     </button>
                 </div>
+                <div class="warehouse-product-action">
+                    <h4>Sort by:</h4>
+                    <md-radio-group [(ngModel)]="sortProperty">
+                        <md-radio-button value="title">Title</md-radio-button>
+                        <md-radio-button value="weight">Weight</md-radio-button>
+                    </md-radio-group>
+                </div>
             </div>
         </md-card-content>
     </md-card>
     <div class="warehouse-related-products" *ngIf="product.children" [hidden]="!expanded">
-        <warehouse-product *ngFor="let item of product.children" [product]="item"></warehouse-product>
+        <warehouse-product *ngFor="let item of (product.children | warehouseSort : sortProperty : sortOrder)" [product]="item"></warehouse-product>
     </div>
     <md-dialog #dialog (onClose)="addProduct($event)">
         <input type="text" #titleEl id="title" placeholder="Title" />

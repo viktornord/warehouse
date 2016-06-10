@@ -14,5 +14,10 @@
   }
   &-action {
     margin-right: 10px;
+    display: flex;
+    align-items: center;
+    h4 {
+      margin: 0 5px;
+    }
   }
 }
