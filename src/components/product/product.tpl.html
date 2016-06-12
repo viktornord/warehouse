@@ -1,5 +1,5 @@
 <div class="warehouse-product-wrapper">
-    <md-card class="warehouse-product">
+    <md-card class="warehouse-product" [ngClass]="{'warehouse-product-simple': !product.children}">
         <md-card-title class="warehouse-product-title">
             <div layout="row">
                 <warehouse-editable [model]="product.title" (update)="product.setTitle($event)"></warehouse-editable>
@@ -19,18 +19,20 @@
                         (update)="product.setWeight($event)"
                         input-type="number">
                 </warehouse-editable>
-                <span class="warehouse-sort-btn" (click)="sortBy('weight')" [hidden]="!isSortedBy('weight')"><i md-icon>keyboard_arrow_{{sortArrowDirection}}</i></span>
+                <span class="warehouse-sort-btn" (click)="sortBy('weight')" [hidden]="!isSortedBy('weight')">
+                    <i md-icon>keyboard_arrow_{{sortArrowDirection}}</i>
+                </span>
             </div>
             <div class="warehouse-product-actions" layout="row" layout-align="end center">
                 <div class="warehouse-product-action">
                     <md-slide-toggle class="md-primary" (change)="toggle()" *ngIf="product.children"></md-slide-toggle>
                 </div>
                 <div class="warehouse-product-action">
-                    <button md-fab class="md-icon-button md-primary" (click)="dialog.show()" aria-label="Add a product">
+                    <button md-fab class="md-icon-button md-primary" (click)="addProduct()" aria-label="Add a product">
                         <i md-icon>add</i>
                     </button>
                 </div>
-                <div class="warehouse-product-action">
+                <div class="warehouse-product-action warehouse-sort-actions">
                     <h4>Sort by:</h4>
                     <md-radio-group [(ngModel)]="sortProperty">
                         <md-radio-button value="title">Title</md-radio-button>
@@ -43,12 +45,4 @@
     <div class="warehouse-related-products" *ngIf="product.children" [hidden]="!expanded">
         <warehouse-product *ngFor="let item of (product.children | warehouseSort : sortProperty : sortOrder)" [product]="item"></warehouse-product>
     </div>
-    <md-dialog #dialog (onClose)="addProduct($event)">
-        <input type="text" #titleEl id="title" placeholder="Title" />
-        <input type="number" #weightEl id="weight" placeholder="Weight" />
-        <md-dialog-actions>
-            <button md-raised-button (click)="dialog.close({title: titleEl.value, weight: weightEl.value})">Add a product</button>
-            <button md-raised-button (click)="dialog.close(false)"> Cancel</button>
-        </md-dialog-actions>
-    </md-dialog>
 </div>

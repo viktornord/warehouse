@@ -25,6 +25,9 @@
     .warehouse-product-action h4 {
       margin: 0 5px; }
 
+.warehouse-product-simple .warehouse-sort-btn, .warehouse-product-simple .warehouse-sort-actions {
+  display: none; }
+
 /**
  * Mixin that creates a new stacking context.
  * see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context

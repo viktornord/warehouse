@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-const products = require('../data.json');
+const products = require('src/data.json');
 
 @Injectable()
 export class ProductsService {
